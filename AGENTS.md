@@ -1,3 +1,21 @@
+# ATURAN KERJA & INSTRUKSI PROYEK SERVIS KOMPUTER
+
+> **PERINTAH UTAMA**: SELALU baca `docs/SPEC.md` sebelum mengerjakan tahap apa pun. Semua keputusan struktur data, alur bisnis, hak akses, dan UI harus berpatokan pada `docs/SPEC.md`.
+
+## Aturan Kerja (untuk semua tahap)
+1. Kerjakan HANYA tahap yang diminta. Jangan mengerjakan fitur tahap berikutnya.
+2. Sebelum menulis kode, baca `docs/SPEC.md` dan lihat kode yang sudah ada. Konsisten dengan struktur yang sudah dibuat.
+3. Struktur Laravel: Controller tipis, validasi lewat FormRequest, logika bisnis berat (nomor servis, stok, transisi status) di class Service/Action yang bisa dites, route dikelompokkan per peran dengan middleware `auth` dan `role:`.
+4. Nama route, view, dan folder rapi per peran: `admin.*`, `petugas.*`, `teknisi.*`.
+5. Semua query yang menampilkan relasi memakai eager loading (hindari N+1). Tabel panjang diberi pagination (10 per halaman) dan pencarian bila relevan.
+6. Keamanan: CSRF, password di-hash, mass assignment dijaga ($fillable), otorisasi per peran di sisi server (jangan hanya menyembunyikan menu), regenerate session saat login, throttle login.
+7. Jangan ada tombol/tautan mati dan jangan ada data palsu hardcode di view; semua data dari database.
+8. Setelah selesai, JALANKAN sendiri: migrasi/seeder yang relevan, `php artisan test` kalau ada tes, dan `npm run build` untuk memastikan tidak error. Bukti dilaporkan, bukan sekadar klaim "sudah jalan".
+9. Akhiri SETIAP tahap dengan format "STOP & LAPOR": (a) apa yang dibuat, (b) file penting yang berubah, (c) cara saya mencobanya secara manual (langkah klik), (d) hal yang kamu putuskan sendiri atau ragu, (e) hasil pengujian. Lalu berhenti dan tunggu perintah tahap berikutnya.
+10. Kalau menemukan konflik/ambiguitas di spesifikasi, tanyakan di laporan; jangan diam-diam mengubah spesifikasi.
+
+---
+
 <laravel-boost-guidelines>
 === foundation rules ===
 
