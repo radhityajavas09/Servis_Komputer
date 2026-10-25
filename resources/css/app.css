@@ -8,21 +8,61 @@
 
 @theme {
     --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    
-    /* Modern, distinctive aesthetic color tokens */
-    --color-primary-50: #EDF7F2;
-    --color-primary-100: #D8EEE2;
-    --color-primary-200: #B2DEC6;
-    --color-primary-500: #1C6B4F;
-    --color-primary-600: #15573F;
-    --color-primary-700: #104633;
-    --color-primary-800: #0C3627;
-    --color-primary-900: #08261C;
-    
-    --color-surface-bg: #F7F9F8;
+
+    /* Modern, distinctive Nordic Pine & Forest Emerald palette */
+    --color-brand-50: #EDF7F2;
+    --color-brand-100: #D5EDE0;
+    --color-brand-200: #AEE0C5;
+    --color-brand-300: #7ECC9F;
+    --color-brand-400: #42B079;
+    --color-brand-500: #1F6B4B;
+    --color-brand-600: #15573D;
+    --color-brand-700: #104430;
+    --color-brand-800: #0C3223;
+    --color-brand-900: #072117;
+
+    /* Neutrals & Surfaces */
+    --color-surface-bg: #F6F8F7;
     --color-surface-card: #FFFFFF;
-    --color-surface-border: #E3E9E5;
-    
-    --color-text-main: #112019;
-    --color-text-muted: #576961;
+    --color-surface-border: #E3E8E5;
+    --color-surface-hover: #EFF3F0;
+    --color-surface-muted: #F0F4F2;
+
+    /* Typography colors */
+    --color-text-main: #13251C;
+    --color-text-muted: #576B61;
+    --color-text-subtle: #84968C;
+
+    /* Status Tokens */
+    --color-status-diterima-bg: #FEF3C7;
+    --color-status-diterima-text: #92400E;
+    --color-status-diterima-border: #FDE68A;
+    --color-status-diterima-dot: #D97706;
+
+    --color-status-diperiksa-bg: #DBEAFE;
+    --color-status-diperiksa-text: #1E40AF;
+    --color-status-diperiksa-border: #BFDBFE;
+    --color-status-diperiksa-dot: #2563EB;
+
+    --color-status-diperbaiki-bg: #EDE9FE;
+    --color-status-diperbaiki-text: #5B21B6;
+    --color-status-diperbaiki-border: #DDD6FE;
+    --color-status-diperbaiki-dot: #7C3AED;
+
+    --color-status-selesai-bg: #DCFCE7;
+    --color-status-selesai-text: #166534;
+    --color-status-selesai-border: #BBF7D0;
+    --color-status-selesai-dot: #16A34A;
+
+    --color-status-diambil-bg: #F1F5F9;
+    --color-status-diambil-text: #475569;
+    --color-status-diambil-border: #E2E8F0;
+    --color-status-diambil-dot: #64748B;
+}
+
+/* Custom utility tweaks */
+@layer utilities {
+    [x-cloak] {
+        display: none !important;
+    }
 }
