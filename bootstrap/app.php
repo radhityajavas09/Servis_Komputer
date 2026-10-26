@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\RolePengguna;
+use App\Http\Middleware\EnsureUserHasRole;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,7 +14,28 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'role' => EnsureUserHasRole::class,
+        ]);
+
+        $middleware->redirectGuestsTo('/login');
+
+        $middleware->redirectUsersTo(function (Request $request): string {
+            $user = $request->user();
+            if (! $user) {
+                return route('login');
+            }
+
+            $role = $user->role;
+            $roleValue = $role instanceof RolePengguna ? $role->value : (string) $role;
+
+            return match ($roleValue) {
+                'admin' => route('admin.dashboard'),
+                'petugas' => route('petugas.dashboard'),
+                'teknisi' => route('teknisi.dashboard'),
+                default => route('login'),
+            };
+        });
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
