@@ -41,6 +41,12 @@ class MenuHelper
                     'icon' => 'clipboard',
                     'active_patterns' => ['admin.laporan.*'],
                 ],
+                [
+                    'label' => 'Ubah Profil',
+                    'route' => 'profil.edit',
+                    'icon' => 'pencil',
+                    'active_patterns' => ['profil.*'],
+                ],
             ],
             'petugas' => [
                 [
@@ -67,6 +73,12 @@ class MenuHelper
                     'icon' => 'clipboard',
                     'active_patterns' => ['petugas.servis.index', 'petugas.servis.detail', 'petugas.servis.serahkan'],
                 ],
+                [
+                    'label' => 'Ubah Profil',
+                    'route' => 'profil.edit',
+                    'icon' => 'pencil',
+                    'active_patterns' => ['profil.*'],
+                ],
             ],
             'teknisi' => [
                 [
@@ -80,6 +92,12 @@ class MenuHelper
                     'route' => 'teknisi.servis.index',
                     'icon' => 'wrench',
                     'active_patterns' => ['teknisi.servis.*'],
+                ],
+                [
+                    'label' => 'Ubah Profil',
+                    'route' => 'profil.edit',
+                    'icon' => 'pencil',
+                    'active_patterns' => ['profil.*'],
                 ],
             ],
             default => [],
