@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\SparepartController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Petugas\PelangganController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +65,8 @@ Route::middleware(['auth', 'role:petugas'])
         Route::get('/dashboard', function () {
             return view('petugas.dashboard');
         })->name('dashboard');
+
+        Route::resource('pelanggan', PelangganController::class);
     });
 
 // Teknisi Routes (prefix /teknisi, role: teknisi)

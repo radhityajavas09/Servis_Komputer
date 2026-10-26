@@ -26,4 +26,29 @@ class Pelanggan extends Model
     {
         return $this->hasMany(Servis::class, 'id_pelanggan', 'id_pelanggan');
     }
+
+    /**
+     * Get two-letter uppercase initial for customer avatar.
+     */
+    public function getInisialAttribute(): string
+    {
+        $words = preg_split('/\s+/', trim($this->nama));
+        $first = strtoupper(substr($words[0] ?? '', 0, 1));
+        $second = isset($words[1]) ? strtoupper(substr($words[1], 0, 1)) : '';
+
+        return $first.$second ?: 'PL';
+    }
+
+    /**
+     * Get sanitized WhatsApp link for customer phone number.
+     */
+    public function getWaLinkAttribute(): string
+    {
+        $phone = preg_replace('/[^0-9]/', '', $this->no_telepon);
+        if (str_starts_with($phone, '0')) {
+            $phone = '62'.substr($phone, 1);
+        }
+
+        return 'https://wa.me/'.$phone;
+    }
 }
