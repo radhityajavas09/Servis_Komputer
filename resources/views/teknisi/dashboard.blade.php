@@ -13,7 +13,12 @@
         <p class="text-xs text-[#576B61] mt-1 mb-4">Segera hadir pada Tahap 12 (Antrean servis masuk, status pengerjaan, dan riwayat selesai).</p>
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
             <span class="w-2 h-2 rounded-full bg-amber-600 animate-pulse"></span>
-            <span>Autentikasi & Hak Akses Berhasil</span>
+            <span>Workbench Aktif</span>
+        </div>
+        <div class="mt-5">
+            <x-button href="{{ route('teknisi.servis.index') }}" variant="primary" icon="wrench">
+                Buka Daftar Servis Masuk
+            </x-button>
         </div>
     </x-card>
 </x-app-layout>

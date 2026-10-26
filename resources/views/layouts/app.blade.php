@@ -339,5 +339,8 @@
 
     <!-- GLOBAL TOAST NOTIFICATION -->
     <x-toast />
+
+    @stack('scripts')
 </body>
 </html>
+

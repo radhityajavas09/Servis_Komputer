@@ -5,8 +5,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Petugas\PelangganController;
 use App\Http\Controllers\Petugas\PendaftaranServisController;
-use App\Http\Controllers\Petugas\ServisController;
+use App\Http\Controllers\Petugas\ServisController as PetugasServisController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Teknisi\ServisController as TeknisiServisController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -76,10 +77,10 @@ Route::middleware(['auth', 'role:petugas'])
         Route::get('/servis/{servis:no_servis}/tanda-terima', [PendaftaranServisController::class, 'tandaTerima'])->name('servis.tanda-terima');
 
         // Data Servis, Detail & Penyerahan Perangkat
-        Route::get('/servis', [ServisController::class, 'index'])->name('servis.index');
-        Route::get('/servis/{servis:no_servis}', [ServisController::class, 'detail'])->name('servis.detail');
-        Route::get('/servis/{servis:no_servis}/serahkan', [ServisController::class, 'serahkan'])->name('servis.serahkan');
-        Route::post('/servis/{servis:no_servis}/serahkan', [ServisController::class, 'prosesSerahkan'])->name('servis.proses-serahkan');
+        Route::get('/servis', [PetugasServisController::class, 'index'])->name('servis.index');
+        Route::get('/servis/{servis:no_servis}', [PetugasServisController::class, 'detail'])->name('servis.detail');
+        Route::get('/servis/{servis:no_servis}/serahkan', [PetugasServisController::class, 'serahkan'])->name('servis.serahkan');
+        Route::post('/servis/{servis:no_servis}/serahkan', [PetugasServisController::class, 'prosesSerahkan'])->name('servis.proses-serahkan');
     });
 
 // Teknisi Routes (prefix /teknisi, role: teknisi)
@@ -90,6 +91,12 @@ Route::middleware(['auth', 'role:teknisi'])
         Route::get('/dashboard', function () {
             return view('teknisi.dashboard');
         })->name('dashboard');
+
+        // Daftar Servis Masuk, Diagnosis & Pengerjaan
+        Route::get('/servis', [TeknisiServisController::class, 'index'])->name('servis.index');
+        Route::get('/servis/{servis:no_servis}', [TeknisiServisController::class, 'show'])->name('servis.show');
+        Route::put('/servis/{servis:no_servis}/diagnosis', [TeknisiServisController::class, 'updateDiagnosis'])->name('servis.update-diagnosis');
+        Route::post('/servis/{servis:no_servis}/status', [TeknisiServisController::class, 'updateStatus'])->name('servis.update-status');
     });
 
 // Local / Testing UI Component Catalog
