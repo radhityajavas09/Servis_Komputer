@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SparepartController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
@@ -52,6 +53,7 @@ Route::middleware(['auth', 'role:admin'])
         })->name('dashboard');
 
         Route::resource('user', UserController::class);
+        Route::resource('sparepart', SparepartController::class);
     });
 
 // Petugas Servis Routes (prefix /petugas, role: petugas)

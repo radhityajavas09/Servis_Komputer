@@ -34,4 +34,28 @@ class Sparepart extends Model
     {
         return $this->hasMany(DetailSparepart::class, 'id_sparepart', 'id_sparepart');
     }
+
+    /**
+     * Check if stock is low (< 5 and > 0).
+     */
+    public function isStokMenipis(): bool
+    {
+        return $this->stok > 0 && $this->stok < 5;
+    }
+
+    /**
+     * Check if stock is completely depleted.
+     */
+    public function isStokHabis(): bool
+    {
+        return $this->stok <= 0;
+    }
+
+    /**
+     * Get price formatted in Indonesian Rupiah.
+     */
+    public function getHargaRupiahAttribute(): string
+    {
+        return 'Rp '.number_format($this->harga, 0, ',', '.');
+    }
 }
