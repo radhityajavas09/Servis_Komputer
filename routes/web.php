@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Petugas\PelangganController;
 use App\Http\Controllers\Petugas\PendaftaranServisController;
+use App\Http\Controllers\Petugas\ServisController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -73,6 +74,12 @@ Route::middleware(['auth', 'role:petugas'])
         Route::get('/servis/pendaftaran', [PendaftaranServisController::class, 'create'])->name('servis.tambah');
         Route::post('/servis/pendaftaran', [PendaftaranServisController::class, 'store'])->name('servis.store');
         Route::get('/servis/{servis:no_servis}/tanda-terima', [PendaftaranServisController::class, 'tandaTerima'])->name('servis.tanda-terima');
+
+        // Data Servis, Detail & Penyerahan Perangkat
+        Route::get('/servis', [ServisController::class, 'index'])->name('servis.index');
+        Route::get('/servis/{servis:no_servis}', [ServisController::class, 'detail'])->name('servis.detail');
+        Route::get('/servis/{servis:no_servis}/serahkan', [ServisController::class, 'serahkan'])->name('servis.serahkan');
+        Route::post('/servis/{servis:no_servis}/serahkan', [ServisController::class, 'prosesSerahkan'])->name('servis.proses-serahkan');
     });
 
 // Teknisi Routes (prefix /teknisi, role: teknisi)

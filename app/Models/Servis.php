@@ -72,4 +72,9 @@ class Servis extends Model
     {
         return $this->hasMany(DetailSparepart::class, 'id_servis', 'id_servis');
     }
+
+    public function detailSparepart(): HasMany
+    {
+        return $this->detail();
+    }
 }
