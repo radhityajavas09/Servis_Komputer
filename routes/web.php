@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\SparepartController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Petugas\PelangganController;
+use App\Http\Controllers\Petugas\PendaftaranServisController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -67,6 +68,11 @@ Route::middleware(['auth', 'role:petugas'])
         })->name('dashboard');
 
         Route::resource('pelanggan', PelangganController::class);
+
+        // Pendaftaran Servis & Tanda Terima
+        Route::get('/servis/pendaftaran', [PendaftaranServisController::class, 'create'])->name('servis.tambah');
+        Route::post('/servis/pendaftaran', [PendaftaranServisController::class, 'store'])->name('servis.store');
+        Route::get('/servis/{servis:no_servis}/tanda-terima', [PendaftaranServisController::class, 'tandaTerima'])->name('servis.tanda-terima');
     });
 
 // Teknisi Routes (prefix /teknisi, role: teknisi)
