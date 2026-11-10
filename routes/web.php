@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\ServisController as AdminServisController;
 use App\Http\Controllers\Admin\SparepartController;
 use App\Http\Controllers\Admin\UserController;
@@ -60,6 +61,8 @@ Route::middleware(['auth', 'role:admin'])
 
         Route::resource('user', UserController::class);
         Route::resource('sparepart', SparepartController::class);
+        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+        Route::get('/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
         Route::get('/servis/{servis:no_servis}', [AdminServisController::class, 'show'])->name('servis.show');
     });
 
