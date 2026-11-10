@@ -1,12 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ServisController as AdminServisController;
 use App\Http\Controllers\Admin\SparepartController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Petugas\DashboardController as PetugasDashboardController;
 use App\Http\Controllers\Petugas\PelangganController;
 use App\Http\Controllers\Petugas\PendaftaranServisController;
 use App\Http\Controllers\Petugas\ServisController as PetugasServisController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Teknisi\DashboardController as TeknisiDashboardController;
 use App\Http\Controllers\Teknisi\ServisController as TeknisiServisController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -52,12 +56,11 @@ Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->as('admin.')
     ->group(function () {
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
 
         Route::resource('user', UserController::class);
         Route::resource('sparepart', SparepartController::class);
+        Route::get('/servis/{servis:no_servis}', [AdminServisController::class, 'show'])->name('servis.show');
     });
 
 // Petugas Servis Routes (prefix /petugas, role: petugas)
@@ -65,9 +68,7 @@ Route::middleware(['auth', 'role:petugas'])
     ->prefix('petugas')
     ->as('petugas.')
     ->group(function () {
-        Route::get('/dashboard', function () {
-            return view('petugas.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', PetugasDashboardController::class)->name('dashboard');
 
         Route::resource('pelanggan', PelangganController::class);
 
@@ -88,9 +89,7 @@ Route::middleware(['auth', 'role:teknisi'])
     ->prefix('teknisi')
     ->as('teknisi.')
     ->group(function () {
-        Route::get('/dashboard', function () {
-            return view('teknisi.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', TeknisiDashboardController::class)->name('dashboard');
 
         // Daftar Servis Masuk, Diagnosis & Pengerjaan
         Route::get('/servis', [TeknisiServisController::class, 'index'])->name('servis.index');
