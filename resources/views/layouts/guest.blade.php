@@ -11,7 +11,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="h-full font-sans text-[#13251C] antialiased flex flex-col justify-between p-4 sm:p-6">
-    <div class="w-full max-w-md mx-auto my-auto py-8">
+    <div class="w-full {{ $maxWidth ?? 'max-w-md' }} mx-auto my-auto py-8">
         <!-- Logo / Brand Header -->
         <div class="text-center mb-8">
             <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[#15573F] text-white font-bold text-xl shadow-xs mb-3">
@@ -21,10 +21,14 @@
             <p class="text-xs text-[#576B61] mt-0.5">Sistem Manajemen Pelayanan Servis</p>
         </div>
 
-        <!-- Main Card -->
-        <div class="bg-white rounded-2xl border border-[#E3E8E5] shadow-xs p-6 sm:p-8">
+        @if(isset($rawSlot) && $rawSlot)
             {{ $slot }}
-        </div>
+        @else
+            <!-- Main Card -->
+            <div class="bg-white rounded-2xl border border-[#E3E8E5] shadow-xs p-6 sm:p-8">
+                {{ $slot }}
+            </div>
+        @endif
     </div>
 
     <footer class="text-center text-xs text-[#576B61] py-4">

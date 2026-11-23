@@ -7,7 +7,7 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <x-button href="{{ route('petugas.pelanggan.index') }}" variant="secondary" size="sm" icon="chevron-right" class="rotate-180">
+            <x-button href="{{ route('petugas.pelanggan.index') }}" variant="secondary" size="sm" icon="arrow-left">
                 Kembali
             </x-button>
             <x-button href="{{ route('petugas.pelanggan.edit', $pelanggan) }}" variant="secondary" size="sm" icon="pencil">

@@ -199,9 +199,9 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3 justify-end">
-                    <x-button href="{{ route('petugas.pelanggan.index') }}" variant="secondary">
-                        Batal
+                <div class="flex items-center justify-between gap-3">
+                    <x-button href="{{ route('petugas.servis.index') }}" variant="secondary" icon="arrow-left">
+                        Kembali
                     </x-button>
 
                     <x-button type="submit" variant="primary" icon="printer" x-bind:disabled="submitting">

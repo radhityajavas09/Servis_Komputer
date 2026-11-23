@@ -7,7 +7,7 @@
                 <p class="text-xs text-[#576B61] mt-0.5">Konfirmasi pelunasan biaya servis dan penyerahan perangkat {{ $servis->no_servis }} kepada pelanggan.</p>
             </div>
 
-            <x-button href="{{ route('petugas.servis.detail', $servis) }}" variant="secondary" size="sm" icon="chevron-right" class="rotate-180">
+            <x-button href="{{ route('petugas.servis.detail', $servis) }}" variant="secondary" size="sm" icon="arrow-left">
                 Kembali
             </x-button>
         </div>
@@ -123,9 +123,9 @@
             </div>
 
             {{-- TOMBOL AKSI --}}
-            <div class="flex items-center justify-end gap-3 pt-2">
-                <x-button href="{{ route('petugas.servis.detail', $servis) }}" variant="secondary">
-                    Batal
+            <div class="flex items-center justify-between gap-3 pt-2">
+                <x-button href="{{ route('petugas.servis.detail', $servis) }}" variant="secondary" icon="arrow-left">
+                    Kembali
                 </x-button>
 
                 <x-button

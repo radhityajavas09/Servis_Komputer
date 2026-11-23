@@ -9,10 +9,10 @@ beforeEach(function () {
     RateLimiter::clear('wrong@servis.test|127.0.0.1');
 });
 
-test('guest visiting root / is redirected to /login', function () {
+test('guest visiting root / is redirected to customer portal /lacak', function () {
     $response = $this->get('/');
 
-    $response->assertRedirect('/login');
+    $response->assertRedirect('/lacak');
 });
 
 test('guest can view the login form', function () {

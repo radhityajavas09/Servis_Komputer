@@ -51,6 +51,7 @@
                         value="{{ $search }}"
                         placeholder="Cari berdasarkan nama sparepart..."
                         class="pl-9"
+                        @input.debounce.400ms="$el.form.submit()"
                     />
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#84968C]">
                         <x-icon name="search" class="w-4 h-4" />
@@ -59,7 +60,7 @@
 
                 {{-- Filter Stok --}}
                 <div class="w-full sm:w-56">
-                    <x-select name="stock">
+                    <x-select name="stock" @change="$el.form.submit()">
                         <option value="">Semua Status Stok</option>
                         <option value="tersedia" {{ $stockFilter === 'tersedia' ? 'selected' : '' }}>Stok Normal (≥ 5 unit)</option>
                         <option value="menipis" {{ $stockFilter === 'menipis' ? 'selected' : '' }}>Stok Menipis (< 5 unit)</option>

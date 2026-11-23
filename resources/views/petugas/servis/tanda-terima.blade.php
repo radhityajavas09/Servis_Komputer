@@ -103,6 +103,7 @@
             </div>
             <ol class="list-decimal list-inside space-y-0.5 text-amber-900 pl-1">
                 <li><strong>Wajib membawa dan menyerahkan lembar tanda terima ini</strong> saat mengambil perangkat servis.</li>
+                <li>Pantau status perbaikan dan rincian biaya secara online di: <strong class="font-mono text-amber-950 underline">{{ route('lacak.index') }}</strong> dengan nomor tiket <strong class="font-mono text-amber-950">{{ $servis->no_servis }}</strong>.</li>
                 <li>Pemeriksaan kerusakan dan estimasi biaya perbaikan/sparepart akan dikonfirmasikan oleh teknisi kepada pelanggan.</li>
                 <li>Perangkat yang telah selesai diservis dan tidak diambil dalam waktu 30 hari sejak pemberitahuan selesai berada di luar tanggung jawab pihak tempat servis.</li>
             </ol>

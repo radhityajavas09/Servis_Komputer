@@ -32,7 +32,7 @@
         <!-- Control buttons for print and return -->
         <div class="no-print mb-6 flex items-center justify-between gap-3">
             <a href="{{ $backUrl ?? url()->previous() }}" class="inline-flex items-center gap-2 text-xs font-semibold text-[#576B61] hover:text-[#13251C] transition-colors">
-                <x-icon name="chevron-right" class="w-4 h-4 rotate-180" />
+                <x-icon name="arrow-left" class="w-4 h-4" />
                 <span>Kembali</span>
             </a>
 

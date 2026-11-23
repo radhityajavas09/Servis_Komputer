@@ -7,7 +7,7 @@
                 <p class="text-xs text-[#576B61] mt-0.5">Perbarui profil dan wewenang pengguna {{ $user->nama }}.</p>
             </div>
 
-            <x-button href="{{ route('admin.user.index') }}" variant="secondary" size="sm" icon="chevron-right" class="rotate-180">
+            <x-button href="{{ route('admin.user.index') }}" variant="secondary" size="sm" icon="arrow-left">
                 Kembali
             </x-button>
         </div>
@@ -84,7 +84,7 @@
                             />
                         </x-field>
 
-                        <x-field label="Konfirmasi Password Baru" name="password_confirmation" hint="Ulangi password baru jika diisi.">
+                        <x-field label="Konfirmasi Password Baru" name="password_confirmation" hint="Masukkan ulang password baru untuk konfirmasi.">
                             <x-input
                                 id="password_confirmation"
                                 x-bind:type="showPassword ? 'text' : 'password'"
@@ -97,9 +97,9 @@
                 </div>
 
                 {{-- Tombol Aksi --}}
-                <div class="pt-5 border-t border-[#F0F4F2] flex items-center justify-end gap-3">
-                    <x-button href="{{ route('admin.user.index') }}" variant="secondary">
-                        Batal
+                <div class="pt-5 border-t border-[#F0F4F2] flex items-center justify-between gap-3">
+                    <x-button href="{{ route('admin.user.index') }}" variant="secondary" icon="arrow-left">
+                        Kembali
                     </x-button>
                     <x-button type="submit" variant="primary" icon="check-circle" x-bind:disabled="submitting">
                         Simpan Perubahan

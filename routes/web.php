@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ServisController as AdminServisController;
 use App\Http\Controllers\Admin\SparepartController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LacakServisController;
 use App\Http\Controllers\Petugas\DashboardController as PetugasDashboardController;
 use App\Http\Controllers\Petugas\PelangganController;
 use App\Http\Controllers\Petugas\PendaftaranServisController;
@@ -22,10 +23,10 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Root redirect: Guest -> Login, Auth -> Respective Role Dashboard
+// Root redirect: Guest -> Portal Pelanggan (/lacak), Auth -> Respective Role Dashboard
 Route::get('/', function () {
     if (! Auth::check()) {
-        return redirect()->route('login');
+        return redirect()->route('lacak.index');
     }
 
     $role = Auth::user()->role;
@@ -38,6 +39,11 @@ Route::get('/', function () {
         default => redirect()->route('login'),
     };
 })->name('home');
+
+// Halaman Publik Lacak Servis Pelanggan (Tanpa Perlu Login)
+Route::get('/lacak', [LacakServisController::class, 'index'])->name('lacak.index');
+Route::get('/lacak/{no_servis}', [LacakServisController::class, 'show'])->name('lacak.show');
+Route::post('/lacak/{no_servis}/keluhan', [LacakServisController::class, 'updateKeluhan'])->name('lacak.keluhan.update');
 
 // Guest Authentication Routes
 Route::middleware('guest')->group(function () {

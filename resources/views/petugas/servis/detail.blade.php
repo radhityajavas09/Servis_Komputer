@@ -16,7 +16,7 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
-            <x-button href="{{ route('petugas.servis.index') }}" variant="secondary" size="sm" icon="chevron-right" class="rotate-180">
+            <x-button href="{{ route('petugas.servis.index') }}" variant="secondary" size="sm" icon="arrow-left">
                 Kembali
             </x-button>
 

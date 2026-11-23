@@ -7,7 +7,7 @@
                 <p class="text-xs text-[#576B61] mt-0.5">Perbarui informasi harga atau ketersediaan stok {{ $sparepart->nama_sparepart }}.</p>
             </div>
 
-            <x-button href="{{ route('admin.sparepart.index') }}" variant="secondary" size="sm" icon="chevron-right" class="rotate-180">
+            <x-button href="{{ route('admin.sparepart.index') }}" variant="secondary" size="sm" icon="arrow-left">
                 Kembali
             </x-button>
         </div>
@@ -61,9 +61,9 @@
                 </div>
 
                 {{-- Tombol Aksi --}}
-                <div class="pt-5 border-t border-[#F0F4F2] flex items-center justify-end gap-3">
-                    <x-button href="{{ route('admin.sparepart.index') }}" variant="secondary">
-                        Batal
+                <div class="pt-5 border-t border-[#F0F4F2] flex items-center justify-between gap-3">
+                    <x-button href="{{ route('admin.sparepart.index') }}" variant="secondary" icon="arrow-left">
+                        Kembali
                     </x-button>
                     <x-button type="submit" variant="primary" icon="check-circle" x-bind:disabled="submitting">
                         Simpan Perubahan

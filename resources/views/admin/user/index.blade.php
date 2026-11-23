@@ -22,6 +22,7 @@
                         value="{{ $search }}"
                         placeholder="Cari berdasarkan nama atau email..."
                         class="pl-9"
+                        @input.debounce.400ms="$el.form.submit()"
                     />
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#84968C]">
                         <x-icon name="search" class="w-4 h-4" />
@@ -30,7 +31,7 @@
 
                 {{-- Filter Peran --}}
                 <div class="w-full sm:w-48">
-                    <x-select name="role">
+                    <x-select name="role" @change="$el.form.submit()">
                         <option value="">Semua Peran</option>
                         <option value="admin" {{ $selectedRole === 'admin' ? 'selected' : '' }}>Administrator</option>
                         <option value="petugas" {{ $selectedRole === 'petugas' ? 'selected' : '' }}>Petugas Servis</option>

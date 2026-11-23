@@ -59,6 +59,7 @@
                         value="{{ $search }}"
                         placeholder="Cari no. tiket, nama pelanggan, atau merk perangkat..."
                         class="pl-9"
+                        @input.debounce.400ms="$el.form.submit()"
                     />
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#84968C]">
                         <x-icon name="search" class="w-4 h-4" />
@@ -67,7 +68,7 @@
 
                 {{-- Filter Status --}}
                 <div class="w-full sm:w-56">
-                    <x-select name="status">
+                    <x-select name="status" @change="$el.form.submit()">
                         <option value="">Semua Status Servis</option>
                         <option value="diterima" {{ $statusFilter === 'diterima' ? 'selected' : '' }}>Diterima</option>
                         <option value="diperiksa" {{ $statusFilter === 'diperiksa' ? 'selected' : '' }}>Dalam Pemeriksaan</option>

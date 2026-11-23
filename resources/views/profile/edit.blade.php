@@ -91,7 +91,7 @@
                                     />
                                 </x-field>
 
-                                <x-field label="Konfirmasi Password Baru" name="password_confirmation" hint="Ulangi password baru yang sama.">
+                                <x-field label="Konfirmasi Password Baru" name="password_confirmation" hint="Masukkan ulang password baru untuk konfirmasi.">
                                     <x-input
                                         id="password_confirmation"
                                         x-bind:type="showPassword ? 'text' : 'password'"
