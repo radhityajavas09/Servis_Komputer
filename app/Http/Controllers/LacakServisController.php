@@ -67,7 +67,7 @@ class LacakServisController extends Controller
 
                 // Tautan WhatsApp resmi untuk konfirmasi langsung
                 $pesanWa = urlencode("Halo Admin Servis Komputer, saya pemilik tiket servis *{$servis->no_servis}* ({$servis->merk_tipe}). Saya ingin konfirmasi perihal pengerjaan/biaya perangkat saya.");
-                $waLink = "https://wa.me/6281234567890?text={$pesanWa}";
+                $waLink = "https://wa.me/6285601448610?text={$pesanWa}";
             }
         }
 
