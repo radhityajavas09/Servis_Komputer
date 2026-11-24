@@ -19,4 +19,17 @@ class ServisController extends Controller
             'servis' => $servis,
         ]);
     }
+
+    /**
+     * Display printable receipt or invoice for Administrator.
+     */
+    public function cetak(Servis $servis): View
+    {
+        $servis->load(['pelanggan', 'petugas', 'teknisi', 'detail.sparepart']);
+
+        return view('petugas.servis.tanda-terima', [
+            'servis' => $servis,
+            'backUrl' => route('admin.servis.show', $servis),
+        ]);
+    }
 }

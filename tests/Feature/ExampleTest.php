@@ -1,7 +1,7 @@
 <?php
 
-test('the application redirects guest from root to login', function () {
+test('the application redirects guest from root to customer portal lacak', function () {
     $response = $this->get('/');
 
-    $response->assertRedirect('/login');
+    $response->assertRedirect('/lacak');
 });

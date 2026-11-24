@@ -43,6 +43,7 @@ Route::get('/', function () {
 // Halaman Publik Lacak Servis Pelanggan (Tanpa Perlu Login)
 Route::get('/lacak', [LacakServisController::class, 'index'])->name('lacak.index');
 Route::get('/lacak/{no_servis}', [LacakServisController::class, 'show'])->name('lacak.show');
+Route::get('/lacak/{no_servis}/cetak', [LacakServisController::class, 'cetak'])->name('lacak.cetak');
 Route::post('/lacak/{no_servis}/keluhan', [LacakServisController::class, 'updateKeluhan'])->name('lacak.keluhan.update');
 
 // Guest Authentication Routes
@@ -70,6 +71,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
         Route::get('/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
         Route::get('/servis/{servis:no_servis}', [AdminServisController::class, 'show'])->name('servis.show');
+        Route::get('/servis/{servis:no_servis}/cetak', [AdminServisController::class, 'cetak'])->name('servis.cetak');
     });
 
 // Petugas Servis Routes (prefix /petugas, role: petugas)

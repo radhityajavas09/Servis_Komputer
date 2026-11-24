@@ -19,7 +19,7 @@ test('guest can view the login form', function () {
     $response = $this->get('/login');
 
     $response->assertStatus(200);
-    $response->assertSee('Selamat Datang Kembali');
+    $response->assertSee('Login Staf dan Teknisi');
     $response->assertSee('Alamat Email');
     $response->assertSee('Password');
     $response->assertSee('Masuk ke Sistem');

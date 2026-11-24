@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\RolePengguna;
 use App\Enums\StatusServis;
 use App\Models\DetailSparepart;
 use App\Models\Pelanggan;
@@ -8,23 +7,11 @@ use App\Models\Servis;
 use App\Models\Sparepart;
 use App\Models\User;
 
-beforeEach(function () {
-    $this->petugas = User::factory()->create([
-        'nama' => 'Petugas Front Desk',
-        'role' => RolePengguna::Petugas,
-    ]);
-
-    $this->teknisi = User::factory()->create([
-        'nama' => 'Budi Teknisi',
-        'role' => RolePengguna::Teknisi,
-    ]);
-
-    $this->pelanggan = Pelanggan::factory()->create([
-        'nama' => 'Budi Santoso',
-        'no_telepon' => '081234567890',
-        'alamat' => 'Jl. Merdeka No. 10',
-    ]);
-});
+/*
+|--------------------------------------------------------------------------
+| Portal Pelacakan Servis Pelanggan (Public Customer Portal) Tests
+|--------------------------------------------------------------------------
+*/
 
 test('halaman lacak servis publik dapat dibuka oleh guest', function () {
     $response = $this->get('/lacak');
@@ -44,11 +31,19 @@ test('pencarian tiket yang tidak ada menampilkan pesan ramah', function () {
 });
 
 test('pelanggan dapat melacak status servis yang ada dengan nomor tiket', function () {
-    $servis = Servis::factory()->create([
+    $petugas = User::factory()->petugas()->create();
+    $teknisi = User::factory()->teknisi()->create(['nama' => 'Budi Teknisi']);
+    $pelanggan = Pelanggan::factory()->create([
+        'nama' => 'Budi Santoso',
+        'no_telepon' => '081234567890',
+        'alamat' => 'Jl. Merdeka No. 10',
+    ]);
+
+    Servis::factory()->create([
         'no_servis' => 'SRV-001',
-        'id_pelanggan' => $this->pelanggan->id_pelanggan,
-        'id_petugas' => $this->petugas->id_user,
-        'id_teknisi' => $this->teknisi->id_user,
+        'id_pelanggan' => $pelanggan->id_pelanggan,
+        'id_petugas' => $petugas->id_user,
+        'id_teknisi' => $teknisi->id_user,
         'jenis_perangkat' => 'Laptop',
         'merk_tipe' => 'Asus Vivobook 14',
         'keluhan' => 'Layar blank hitam bergaris',
@@ -72,10 +67,13 @@ test('pelanggan dapat melacak status servis yang ada dengan nomor tiket', functi
 });
 
 test('pencarian dengan input angka seperti 1 otomatis diformat ke SRV-001', function () {
+    $petugas = User::factory()->petugas()->create();
+    $pelanggan = Pelanggan::factory()->create();
+
     Servis::factory()->create([
         'no_servis' => 'SRV-001',
-        'id_pelanggan' => $this->pelanggan->id_pelanggan,
-        'id_petugas' => $this->petugas->id_user,
+        'id_pelanggan' => $pelanggan->id_pelanggan,
+        'id_petugas' => $petugas->id_user,
         'jenis_perangkat' => 'Laptop',
         'merk_tipe' => 'Lenovo IdeaPad',
         'status' => StatusServis::Diterima,
@@ -89,6 +87,10 @@ test('pencarian dengan input angka seperti 1 otomatis diformat ke SRV-001', func
 });
 
 test('tiket berstatus selesai menampilkan garansi toko dan rincian suku cadang', function () {
+    $petugas = User::factory()->petugas()->create();
+    $teknisi = User::factory()->teknisi()->create();
+    $pelanggan = Pelanggan::factory()->create();
+
     $sparepart = Sparepart::factory()->create([
         'nama_sparepart' => 'SSD Kingston 512GB',
         'harga' => 450000,
@@ -97,9 +99,9 @@ test('tiket berstatus selesai menampilkan garansi toko dan rincian suku cadang',
 
     $servis = Servis::factory()->create([
         'no_servis' => 'SRV-005',
-        'id_pelanggan' => $this->pelanggan->id_pelanggan,
-        'id_petugas' => $this->petugas->id_user,
-        'id_teknisi' => $this->teknisi->id_user,
+        'id_pelanggan' => $pelanggan->id_pelanggan,
+        'id_petugas' => $petugas->id_user,
+        'id_teknisi' => $teknisi->id_user,
         'status' => StatusServis::Selesai,
         'biaya_jasa' => 100000,
         'total_biaya' => 550000,
@@ -122,10 +124,13 @@ test('tiket berstatus selesai menampilkan garansi toko dan rincian suku cadang',
 });
 
 test('pelanggan dapat menambahkan catatan keluhan tambahan pada tiket servis aktif', function () {
+    $petugas = User::factory()->petugas()->create();
+    $pelanggan = Pelanggan::factory()->create();
+
     $servis = Servis::factory()->create([
         'no_servis' => 'SRV-010',
-        'id_pelanggan' => $this->pelanggan->id_pelanggan,
-        'id_petugas' => $this->petugas->id_user,
+        'id_pelanggan' => $pelanggan->id_pelanggan,
+        'id_petugas' => $petugas->id_user,
         'status' => StatusServis::Diperiksa,
         'keluhan' => 'Layar berkedip',
     ]);
@@ -143,10 +148,13 @@ test('pelanggan dapat menambahkan catatan keluhan tambahan pada tiket servis akt
 });
 
 test('pelanggan tidak dapat menambah catatan jika tiket sudah berstatus selesai', function () {
-    $servis = Servis::factory()->create([
+    $petugas = User::factory()->petugas()->create();
+    $pelanggan = Pelanggan::factory()->create();
+
+    Servis::factory()->create([
         'no_servis' => 'SRV-011',
-        'id_pelanggan' => $this->pelanggan->id_pelanggan,
-        'id_petugas' => $this->petugas->id_user,
+        'id_pelanggan' => $pelanggan->id_pelanggan,
+        'id_petugas' => $petugas->id_user,
         'status' => StatusServis::Selesai,
         'keluhan' => 'Ganti pasta thermal',
     ]);
@@ -157,4 +165,51 @@ test('pelanggan tidak dapat menambah catatan jika tiket sudah berstatus selesai'
 
     $response->assertRedirect('/lacak/SRV-011');
     $response->assertSessionHas('error');
+});
+
+test('pelanggan dapat membuka halaman cetak nota tanpa perlu login', function () {
+    $petugas = User::factory()->petugas()->create();
+    $pelanggan = Pelanggan::factory()->create();
+
+    Servis::factory()->create([
+        'no_servis' => 'SRV-020',
+        'id_pelanggan' => $pelanggan->id_pelanggan,
+        'id_petugas' => $petugas->id_user,
+        'status' => StatusServis::Selesai,
+        'keluhan' => 'Keyboard rusak',
+        'diagnosis' => 'Short circuit di switch huruf A',
+        'tindakan' => 'Ganti keyboard baru',
+        'biaya_jasa' => 100000,
+        'total_biaya' => 250000,
+    ]);
+
+    $response = $this->get('/lacak/SRV-020/cetak');
+
+    $response->assertStatus(200);
+    $response->assertSee('SRV-020');
+    $response->assertSee('Keyboard rusak');
+    $response->assertSee('Short circuit di switch huruf A');
+    $response->assertSee('Rp 250.000');
+    $response->assertSee('JAMINAN GARANSI TOKO RESMI 30 HARI');
+});
+
+test('admin dapat mencetak salinan tanda terima atau nota dari detail servis', function () {
+    $admin = User::factory()->admin()->create();
+    $petugas = User::factory()->petugas()->create();
+    $pelanggan = Pelanggan::factory()->create();
+
+    Servis::factory()->create([
+        'no_servis' => 'SRV-021',
+        'id_pelanggan' => $pelanggan->id_pelanggan,
+        'id_petugas' => $petugas->id_user,
+        'status' => StatusServis::Diambil,
+        'biaya_jasa' => 100000,
+        'total_biaya' => 100000,
+    ]);
+
+    $response = $this->actingAs($admin)->get('/admin/servis/SRV-021/cetak');
+
+    $response->assertStatus(200);
+    $response->assertSee('SRV-021');
+    $response->assertSee('SUDAH LUNAS');
 });

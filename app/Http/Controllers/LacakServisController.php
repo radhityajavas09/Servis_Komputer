@@ -91,6 +91,28 @@ class LacakServisController extends Controller
     }
 
     /**
+     * Cetak dokumen bukti servis / nota pelunasan resmi pelanggan tanpa perlu login staf.
+     */
+    public function cetak(string $no_servis): View
+    {
+        $queryNo = strtoupper(trim($no_servis));
+
+        // Otomatis normalisasi jika input berupa angka murni (1 -> SRV-001)
+        if (preg_match('/^\d+$/', $queryNo)) {
+            $queryNo = 'SRV-'.str_pad($queryNo, 3, '0', STR_PAD_LEFT);
+        }
+
+        $servis = Servis::with(['pelanggan', 'teknisi', 'petugas', 'detail.sparepart'])
+            ->where('no_servis', $queryNo)
+            ->firstOrFail();
+
+        return view('petugas.servis.tanda-terima', [
+            'servis' => $servis,
+            'backUrl' => route('lacak.show', $servis->no_servis),
+        ]);
+    }
+
+    /**
      * Pelanggan menambahkan catatan tambahan atau memperbarui keluhan pada tiket yang sedang aktif.
      */
     public function updateKeluhan(Request $request, string $no_servis): RedirectResponse

@@ -1,7 +1,7 @@
 <x-guest-layout title="Masuk ke Akun - Servis Komputer">
     <div class="mb-6">
-        <h2 class="text-xl font-bold tracking-tight text-[#13251C]">Selamat Datang Kembali</h2>
-        <p class="text-xs text-[#576B61] mt-1">Silakan masukkan email dan password untuk masuk ke sistem pelayanan servis.</p>
+        <h2 class="text-xl font-bold tracking-tight text-[#13251C]">Login Staf dan Teknisi</h2>
+        <p class="text-xs text-[#576B61] mt-1">Area khusus tim internal bengkel untuk mengelola data dan pelayanan servis.</p>
     </div>
 
     {{-- Error Banner di atas form bila login gagal --}}
@@ -97,28 +97,10 @@
 
     {{-- Akses Pelanggan: Cek / Lacak Servis --}}
     <div class="mt-6 pt-5 border-t border-[#F0F4F2] text-center">
-        <p class="text-xs text-[#576B61] mb-2.5">Pelanggan ingin cek status servis perangkat Anda?</p>
+        <p class="text-xs text-[#576B61] mb-2.5">Bukan staf? Pelanggan ingin cek status servis perangkat?</p>
         <a href="{{ route('lacak.index') }}" class="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl text-xs font-semibold bg-[#EDF7F2] text-[#15573F] border border-[#B2DEC6] hover:bg-[#deede4] transition-colors shadow-2xs">
-            <x-icon name="search" class="w-4 h-4 text-[#15573F]" />
-            <span>Lacak Status Servis via Kode Tiket</span>
-            <x-icon name="arrow-up-right" class="w-3.5 h-3.5 text-[#15573F]" />
+            <x-icon name="arrow-left" class="w-3.5 h-3.5 text-[#15573F]" />
+            <span>Kembali ke Portal Pelacakan Pelanggan</span>
         </a>
-    </div>
-
-    {{-- Info Akun Contoh Demo --}}
-    <div class="mt-6 pt-5 border-t border-[#F0F4F2] text-xs text-[#576B61] space-y-1.5">
-        <p class="font-bold text-[#13251C] text-[11px] uppercase tracking-wider">Akun Demo Default:</p>
-        <p class="flex items-center justify-between">
-            <span>Admin: <strong class="text-[#13251C]">admin@servis.test</strong></span>
-            <span class="font-mono text-[#84968C]">password</span>
-        </p>
-        <p class="flex items-center justify-between">
-            <span>Petugas: <strong class="text-[#13251C]">petugas@servis.test</strong></span>
-            <span class="font-mono text-[#84968C]">password</span>
-        </p>
-        <p class="flex items-center justify-between">
-            <span>Teknisi: <strong class="text-[#13251C]">teknisi@servis.test</strong></span>
-            <span class="font-mono text-[#84968C]">password</span>
-        </p>
     </div>
 </x-guest-layout>

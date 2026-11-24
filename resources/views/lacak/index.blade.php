@@ -32,9 +32,9 @@
                         <span>Kembali ke Panel {{ ucfirst(auth()->user()->role->value) }}</span>
                     </a>
                 @else
-                    <a href="{{ route('login') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-[#576B61] hover:text-[#13251C] hover:bg-[#F6F8F7] border border-transparent hover:border-[#E3E8E5] transition-all">
-                        <span>Login Petugas / Staf</span>
-                        <x-icon name="arrow-up-right" class="w-3.5 h-3.5" />
+                    <a href="{{ route('login') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-[#84968C] hover:text-[#13251C] hover:bg-[#F6F8F7] border border-transparent hover:border-[#E3E8E5] transition-all" title="Akses khusus staf internal toko">
+                        <x-icon name="user" class="w-3.5 h-3.5" />
+                        <span>Area Khusus Staf</span>
                     </a>
                 @endauth
             </div>
@@ -62,7 +62,7 @@
                     <div class="max-w-xl mx-auto mb-5 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-800 flex items-start gap-3">
                         <x-icon name="alert" class="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
                         <div class="text-xs">
-                            <p class="font-bold">Nomor Tiket Tidak Ditemukan</p>
+                            <p class="font-bold">Pencarian Tidak Ditemukan</p>
                             <p class="mt-0.5 text-red-700 leading-relaxed">{{ $error }}</p>
                         </div>
                     </div>
@@ -159,6 +159,14 @@
 
                         {{-- Tombol Cepat Aksi Pelanggan --}}
                         <div class="flex flex-wrap items-center gap-2">
+                            <a
+                                href="{{ route('lacak.index') }}"
+                                class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-white border border-[#CCD5D0] text-[#576B61] hover:text-[#13251C] hover:bg-[#F6F8F7] transition-colors"
+                            >
+                                <x-icon name="arrow-left" class="w-3.5 h-3.5" />
+                                <span>Cek Tiket Lain</span>
+                            </a>
+
                             @if ($waLink)
                                 <a
                                     href="{{ $waLink }}"
@@ -170,7 +178,7 @@
                             @endif
 
                             <a
-                                href="{{ route('petugas.servis.tanda-terima', $servis) }}"
+                                href="{{ route('lacak.cetak', $servis->no_servis) }}"
                                 target="_blank"
                                 class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-white border border-[#CCD5D0] text-[#13251C] hover:bg-[#F6F8F7] transition-colors"
                             >

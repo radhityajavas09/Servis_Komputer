@@ -20,7 +20,7 @@
                 Kembali ke Dashboard
             </x-button>
 
-            <x-button href="{{ route('petugas.servis.tanda-terima', $servis) }}" variant="secondary" size="sm" icon="printer">
+            <x-button href="{{ route('admin.servis.cetak', $servis) }}" variant="secondary" size="sm" icon="printer">
                 Lihat Tanda Terima
             </x-button>
         </div>
