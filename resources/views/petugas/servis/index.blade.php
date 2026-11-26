@@ -48,55 +48,78 @@
         />
     </div>
 
-    {{-- FILTER & PENCARIAN --}}
-    <x-card class="p-4 mb-6">
-        <form method="GET" action="{{ route('petugas.servis.index') }}" class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-            <div class="flex-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                {{-- Input Pencarian --}}
-                <div class="relative flex-1">
-                    <x-input
-                        name="q"
-                        value="{{ $search }}"
-                        placeholder="Cari no. tiket, nama pelanggan, atau merk perangkat..."
-                        class="pl-9"
-                        @input.debounce.400ms="$el.form.submit()"
-                    />
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#84968C]">
-                        <x-icon name="search" class="w-4 h-4" />
+    {{-- FILTER & PENCARIAN REAL-TIME --}}
+    <div x-data="liveTableSearch('{{ route('petugas.servis.index') }}', 'servis-table-container', '{{ addslashes($search) }}')">
+        <x-card class="p-4 mb-6">
+            <form x-ref="filterForm" method="GET" action="{{ route('petugas.servis.index') }}" @submit.prevent="applyFilter()" class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                <div class="flex-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    {{-- Input Pencarian --}}
+                    <div class="relative flex-1">
+                        <x-input
+                            name="q"
+                            x-ref="searchInput"
+                            x-model="searchQuery"
+                            placeholder="Cari no. tiket, nama pelanggan, atau merk perangkat..."
+                            class="pl-9 pr-9"
+                            @input.debounce.300ms="applyFilter()"
+                        />
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#84968C]">
+                            <x-icon name="search" class="w-4 h-4" />
+                        </div>
+
+                        {{-- Loading Spinner --}}
+                        <div x-show="loading" x-cloak class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <svg class="animate-spin h-4 w-4 text-[#15573F]" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                            </svg>
+                        </div>
+
+                        {{-- Tombol Clear Cepat --}}
+                        <button
+                            type="button"
+                            x-show="searchQuery && !loading"
+                            x-cloak
+                            @click="clearSearch()"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-[#84968C] hover:text-[#13251C] transition-colors cursor-pointer"
+                            title="Hapus kata kunci"
+                        >
+                            <x-icon name="x" class="w-4 h-4" />
+                        </button>
+                    </div>
+
+                    {{-- Filter Status --}}
+                    <div class="w-full sm:w-56">
+                        <x-select name="status" @change="applyFilter()">
+                            <option value="">Semua Status Servis</option>
+                            <option value="diterima" {{ $statusFilter === 'diterima' ? 'selected' : '' }}>Diterima</option>
+                            <option value="diperiksa" {{ $statusFilter === 'diperiksa' ? 'selected' : '' }}>Dalam Pemeriksaan</option>
+                            <option value="diperbaiki" {{ $statusFilter === 'diperbaiki' ? 'selected' : '' }}>Dalam Perbaikan</option>
+                            <option value="selesai" {{ $statusFilter === 'selesai' ? 'selected' : '' }}>Selesai (Siap Diambil)</option>
+                            <option value="diambil" {{ $statusFilter === 'diambil' ? 'selected' : '' }}>Sudah Diambil</option>
+                        </x-select>
                     </div>
                 </div>
 
-                {{-- Filter Status --}}
-                <div class="w-full sm:w-56">
-                    <x-select name="status" @change="$el.form.submit()">
-                        <option value="">Semua Status Servis</option>
-                        <option value="diterima" {{ $statusFilter === 'diterima' ? 'selected' : '' }}>Diterima</option>
-                        <option value="diperiksa" {{ $statusFilter === 'diperiksa' ? 'selected' : '' }}>Dalam Pemeriksaan</option>
-                        <option value="diperbaiki" {{ $statusFilter === 'diperbaiki' ? 'selected' : '' }}>Dalam Perbaikan</option>
-                        <option value="selesai" {{ $statusFilter === 'selesai' ? 'selected' : '' }}>Selesai (Siap Diambil)</option>
-                        <option value="diambil" {{ $statusFilter === 'diambil' ? 'selected' : '' }}>Sudah Diambil</option>
-                    </x-select>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-2">
-                <x-button type="submit" variant="secondary" size="md" icon="search">
-                    Cari
-                </x-button>
-                @if ($search || $statusFilter)
-                    <x-button href="{{ route('petugas.servis.index') }}" variant="ghost" size="md">
-                        Reset
+                <div class="flex items-center gap-2">
+                    <x-button type="submit" variant="secondary" size="md" icon="search">
+                        Cari
                     </x-button>
-                @endif
-            </div>
-        </form>
-    </x-card>
+                    @if ($search || $statusFilter)
+                        <x-button href="{{ route('petugas.servis.index') }}" variant="ghost" size="md">
+                            Reset
+                        </x-button>
+                    @endif
+                </div>
+            </form>
+        </x-card>
 
-    {{-- TABEL DATA SERVIS --}}
-    @if ($servisList->count() > 0)
-        <div class="bg-white rounded-2xl border border-[#E3E8E5] shadow-xs overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm text-[#13251C]">
+        {{-- TABEL DATA SERVIS CONTAINER --}}
+        <div id="servis-table-container">
+            @if ($servisList->count() > 0)
+                <div class="bg-white rounded-2xl border border-[#E3E8E5] shadow-xs overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-[#13251C]">
                     <thead class="bg-[#F6F8F7] text-xs font-bold text-[#576B61] uppercase tracking-wider border-b border-[#E3E8E5]">
                         <tr>
                             <th scope="col" class="py-3.5 px-4 sm:px-6">No. Servis</th>
@@ -223,4 +246,6 @@
             </x-button>
         </x-empty-state>
     @endif
+    </div>
+</div>
 </x-app-layout>

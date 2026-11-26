@@ -116,7 +116,6 @@
                             value="{{ $filters['q'] ?? '' }}"
                             placeholder="No. tiket, nama, merk..."
                             class="pl-9"
-                            @input.debounce.400ms="$el.form.submit()"
                         />
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#84968C]">
                             <x-icon name="search" class="w-4 h-4" />

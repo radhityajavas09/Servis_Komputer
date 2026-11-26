@@ -40,47 +40,72 @@
         />
     </div>
 
-    {{-- FILTER & PENCARIAN --}}
-    <x-card class="p-4 mb-6">
-        <form method="GET" action="{{ route('admin.sparepart.index') }}" class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-            <div class="flex-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                {{-- Input Pencarian --}}
-                <div class="relative flex-1">
-                    <x-input
-                        name="q"
-                        value="{{ $search }}"
-                        placeholder="Cari berdasarkan nama sparepart..."
-                        class="pl-9"
-                        @input.debounce.400ms="$el.form.submit()"
-                    />
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#84968C]">
-                        <x-icon name="search" class="w-4 h-4" />
+    {{-- FILTER & PENCARIAN REAL-TIME --}}
+    <div x-data="liveTableSearch('{{ route('admin.sparepart.index') }}', 'sparepart-table-container', '{{ addslashes($search) }}')">
+        <x-card class="p-4 mb-6">
+            <form x-ref="filterForm" method="GET" action="{{ route('admin.sparepart.index') }}" @submit.prevent="applyFilter()" class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                <div class="flex-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    {{-- Input Pencarian --}}
+                    <div class="relative flex-1">
+                        <x-input
+                            name="q"
+                            x-ref="searchInput"
+                            x-model="searchQuery"
+                            placeholder="Cari berdasarkan nama sparepart..."
+                            class="pl-9 pr-9"
+                            @input.debounce.300ms="applyFilter()"
+                        />
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#84968C]">
+                            <x-icon name="search" class="w-4 h-4" />
+                        </div>
+
+                        {{-- Loading Spinner --}}
+                        <div x-show="loading" x-cloak class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <svg class="animate-spin h-4 w-4 text-[#15573F]" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                            </svg>
+                        </div>
+
+                        {{-- Tombol Clear Cepat --}}
+                        <button
+                            type="button"
+                            x-show="searchQuery && !loading"
+                            x-cloak
+                            @click="clearSearch()"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-[#84968C] hover:text-[#13251C] transition-colors cursor-pointer"
+                            title="Hapus kata kunci"
+                        >
+                            <x-icon name="x" class="w-4 h-4" />
+                        </button>
+                    </div>
+
+                    {{-- Filter Stok --}}
+                    <div class="w-full sm:w-56">
+                        <x-select name="stock" @change="applyFilter()">
+                            <option value="">Semua Status Stok</option>
+                            <option value="tersedia" {{ $stockFilter === 'tersedia' ? 'selected' : '' }}>Stok Normal (≥ 5 unit)</option>
+                            <option value="menipis" {{ $stockFilter === 'menipis' ? 'selected' : '' }}>Stok Menipis (< 5 unit)</option>
+                            <option value="habis" {{ $stockFilter === 'habis' ? 'selected' : '' }}>Stok Habis (0 unit)</option>
+                        </x-select>
                     </div>
                 </div>
 
-                {{-- Filter Stok --}}
-                <div class="w-full sm:w-56">
-                    <x-select name="stock" @change="$el.form.submit()">
-                        <option value="">Semua Status Stok</option>
-                        <option value="tersedia" {{ $stockFilter === 'tersedia' ? 'selected' : '' }}>Stok Normal (≥ 5 unit)</option>
-                        <option value="menipis" {{ $stockFilter === 'menipis' ? 'selected' : '' }}>Stok Menipis (< 5 unit)</option>
-                        <option value="habis" {{ $stockFilter === 'habis' ? 'selected' : '' }}>Stok Habis (0 unit)</option>
-                    </x-select>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-2">
-                <x-button type="submit" variant="secondary" size="md" icon="search">
-                    Cari
-                </x-button>
-                @if ($search || $stockFilter)
-                    <x-button href="{{ route('admin.sparepart.index') }}" variant="ghost" size="md">
-                        Reset
+                <div class="flex items-center gap-2">
+                    <x-button type="submit" variant="secondary" size="md" icon="search">
+                        Cari
                     </x-button>
-                @endif
-            </div>
-        </form>
-    </x-card>
+                    @if ($search || $stockFilter)
+                        <x-button href="{{ route('admin.sparepart.index') }}" variant="ghost" size="md">
+                            Reset
+                        </x-button>
+                    @endif
+                </div>
+            </form>
+        </x-card>
+
+        {{-- TABEL DATA SPAREPART CONTAINER --}}
+        <div id="sparepart-table-container">
 
     {{-- TABEL DATA SPAREPART --}}
     @if ($spareparts->count() > 0)
@@ -221,6 +246,8 @@
             </x-button>
         </x-empty-state>
     @endif
+    </div>
+</div>
 
     {{-- MODAL KONFIRMASI HAPUS --}}
     <x-modal-confirm

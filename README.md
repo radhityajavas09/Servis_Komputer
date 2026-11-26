@@ -194,13 +194,13 @@ Aplikasi siap diakses melalui virtual host otomatis Laragon di browser:
 
 ## Akun Demo Bawaan
 
-Semua akun demo di bawah ini telah di-generate secara otomatis oleh seeder dengan password default: **`password`**
+Semua akun bawaan di bawah ini telah di-generate secara otomatis oleh seeder dengan password berikut:
 
 | Peran | Nama Pengguna | Alamat Email | Password | Hak Akses Utama |
 |---|---|---|---|---|
-| **Administrator** | Admin | `admin@servis.test` | `password` | Kelola user, kelola sparepart, laporan analitik & grafik, ubah profil |
-| **Petugas Servis** | Dewi Petugas | `petugas@servis.test` | `password` | Kelola pelanggan, pendaftaran servis, cetak tanda terima, serahkan perangkat |
-| **Teknisi** | Budi Teknisi | `teknisi@servis.test` | `password` | Daftar servis masuk, workbench diagnosis & perbaikan, pasang sparepart, update status |
+| **Administrator** | Admin | `admin@servis.test` | `adminSK` | Kelola user, kelola sparepart, laporan analitik & grafik, ubah profil |
+| **Petugas Servis** | Dewi Petugas | `petugas@servis.test` | `petugasSK` | Kelola pelanggan, pendaftaran servis, cetak tanda terima, serahkan perangkat |
+| **Teknisi** | Budi Teknisi | `teknisi@servis.test` | `teknisiSK` | Daftar servis masuk, workbench diagnosis & perbaikan, pasang sparepart, update status |
 
 ---
 

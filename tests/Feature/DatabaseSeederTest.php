@@ -21,15 +21,15 @@ test('database seeder produces exact expected counts, accounts, and distribution
 
     expect($admin)->not->toBeNull()
         ->and($admin->role)->toBe(RolePengguna::Admin)
-        ->and(Hash::check('password', $admin->password))->toBeTrue();
+        ->and(Hash::check('adminSK', $admin->password))->toBeTrue();
 
     expect($petugas)->not->toBeNull()
         ->and($petugas->role)->toBe(RolePengguna::Petugas)
-        ->and(Hash::check('password', $petugas->password))->toBeTrue();
+        ->and(Hash::check('petugasSK', $petugas->password))->toBeTrue();
 
     expect($teknisi)->not->toBeNull()
         ->and($teknisi->role)->toBe(RolePengguna::Teknisi)
-        ->and(Hash::check('password', $teknisi->password))->toBeTrue();
+        ->and(Hash::check('teknisiSK', $teknisi->password))->toBeTrue();
 
     // 2. Delapan Sparepart
     expect(Sparepart::count())->toBe(8);
